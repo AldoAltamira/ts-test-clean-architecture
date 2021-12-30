@@ -1,4 +1,4 @@
-import type { Ordenes } from "../../Ordenes/OrdenesEntity";
+import type { Ordenes } from "../Ordenes/Dominio/OrdenesEntity";
 
 export default class Mongo {
   constructor() {}

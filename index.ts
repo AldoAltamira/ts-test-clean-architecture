@@ -1,27 +1,54 @@
-import type { Ordenes } from "./Ordenes/OrdenesEntity";
-import OrdenesService from "./Controller/OrdenController";
-import Mongo from "./Infra/Persistence/Ordenes";
+import type { Ordenes } from "./Librerias/Ordenes/Dominio/OrdenesEntity";
+import OrdenesService from "./Librerias/Ordenes/Controller/OrdenController";
+import UsuariosService from "./Librerias/Usuarios/Controller/OrdenController";
+// import Mongo from "./Librerias/Infra/Mongo";
+// import Mongo from "./Infra/Persistence/Ordenes";
 
 //Probar la restriccion de mi modelo
 
-const nuevaOrden: Ordenes = {
+const editarOrden: Ordenes = {
   id: "123",
   description: "Pantalon",
   price: 123,
   date: new Date(),
-  type: "MKP1",
+  type: "MKP-1",
+};
+
+const nuevaOrden: Ordenes = {
+  id: "2",
+  description: "jeans",
+  price: 123,
+  date: new Date(),
+  type: "PARIS",
 };
 
 //Framework
 
-const mongo = new Mongo();
-const ordenesService = new OrdenesService(mongo);
+const ordenesService = new OrdenesService();
+
+const userService = new UsuariosService();
+
+// RUTA edit/ordenes/:id
 const editOrden = async () => {
   try {
-    await ordenesService.editarOrden(nuevaOrden);
+    const save = await ordenesService.editarOrden(editarOrden);
+    console.log({ status: 200, message: save });
   } catch (e: any) {
-    console.log("error", e.message);
+    console.error({ status: 500, message: e.message });
+  }
+};
+// console.log("Llamando a edit/ordenes/:id");
+// editOrden();
+
+// RUTA create/ordenes
+const createOrden = async () => {
+  try {
+    const save = await ordenesService.crearOrden(nuevaOrden);
+    console.log({ status: 200, message: save });
+  } catch (e: any) {
+    console.log({ status: 500, message: e.message });
   }
 };
 
-editOrden();
+console.log("Llamando a create/ordenes");
+createOrden();
